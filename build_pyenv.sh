@@ -13,7 +13,7 @@ APP_VERSION="4-2.0"
 
 #################################################################
 
-if [[ ! "$1 $2" ~= "chroot-yes" ]]
+if [[ ! "$@" =~ "chroot-yes" ]]
 then
 	echo "Est vous bien dans un chroot ? [y/n]"
 	read a
@@ -73,7 +73,7 @@ echo $sha256sumarchive > "SUM_$archive_name"
 
 ## Upload Realase
 
-if [[ "$1 $2" ~= "push_release" ]]
+if [[ "$@" =~ "push_release" ]]
 then
     ## Make a draft release json with a markdown body
     release='"tag_name": "v'$APP_VERSION'", "target_commitish": "master", "name": "v'$APP_VERSION'", '
