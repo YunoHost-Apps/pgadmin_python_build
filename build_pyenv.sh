@@ -9,7 +9,6 @@ perstok="kkk"
 dir_name="pgadmin"
 path_to_build="/opt/yunohost/$dir_name"
 release_number="1"
-APP_VERSION="4-2.0"
 
 #################################################################
 
@@ -30,8 +29,18 @@ apt dist-upgrade -y
 pip2 install --upgrade pip
 pip install --upgrade virtualenv
 
+## Get last PgAdmin Version
+
+pgadmin_remote_version_info=$(curl 'https://www.pgadmin.org' | egrep -m 1 'The current version of pgAdmin [[:digit:]] is')
+APP_VERSION=$( \
+    echo "$pgadmin_remote_version_info" | egrep -o '<p>The current version of pgAdmin 4 is <a href="/download/">' | egrep -o '[[:digit:]]' )-$( \
+    echo "$pgadmin_remote_version_info" | egrep -o '<a href="/download/">([[:digit:]]\.?)*</a></p>' | egrep -o '([[:digit:]]\.?)*')
+app_main_version=$(echo "$pgadmin_remote_version_info" | egrep -o '<p>The current version of pgAdmin 4 is <a href="/download/">' | egrep -o '[[:digit:]]' )
+app_sub_version=$(echo "$pgadmin_remote_version_info" | egrep -o '<a href="/download/">([[:digit:]]\.?)*</a></p>' | egrep -o '([[:digit:]]\.?)*')
+    
 # Clean environnement
 rm -rf $path_to_build
+rm -r ~/.cache/pip
 
 # Enable set to be sure that all command don't fail
 set -eu
@@ -51,7 +60,7 @@ source bin/activate
 
 # Install source and build binary
 pip install -I --upgrade pip
-pip install -I --upgrade https://ftp.postgresql.org/pub/pgadmin/pgadmin4/v2.0/pip/pgadmin${APP_VERSION}-py2.py3-none-any.whl
+pip install -I --upgrade https://ftp.postgresql.org/pub/pgadmin/pgadmin$app_main_version/v$app_sub_version/pip/pgadmin${APP_VERSION}-py2.py3-none-any.whl
 
 # Quit virtualenv
 deactivate
