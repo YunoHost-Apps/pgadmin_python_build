@@ -30,14 +30,12 @@ pip2 install --upgrade pip
 pip install --upgrade virtualenv
 
 ## Get last PgAdmin Version
+pgadmin_remote_version_info=$(curl 'https://www.pgadmin.org/download/pgadmin-4-python-wheel/' | grep -m1 "https://www.postgresql.org/")
+app_main_version='4'
+app_sub_version=$(echo $pgadmin_remote_version_info | \
+        grep -E -o ':.*?"' | grep -E -o "v([[:digit:]]\.?)*/" | egrep -o '([[:digit:]]\.?)*')
+APP_VERSION="$app_main_version-$app_sub_version"
 
-pgadmin_remote_version_info=$(curl 'https://www.pgadmin.org' | egrep -m 1 'The current version of pgAdmin [[:digit:]] is')
-APP_VERSION=$( \
-    echo "$pgadmin_remote_version_info" | egrep -o '<p>The current version of pgAdmin 4 is <a href="/download/">' | egrep -o '[[:digit:]]' )-$( \
-    echo "$pgadmin_remote_version_info" | egrep -o '<a href="/download/">([[:digit:]]\.?)*</a></p>' | egrep -o '([[:digit:]]\.?)*')
-app_main_version=$(echo "$pgadmin_remote_version_info" | egrep -o '<p>The current version of pgAdmin 4 is <a href="/download/">' | egrep -o '[[:digit:]]' )
-app_sub_version=$(echo "$pgadmin_remote_version_info" | egrep -o '<a href="/download/">([[:digit:]]\.?)*</a></p>' | egrep -o '([[:digit:]]\.?)*')
-    
 # Clean environnement
 rm -rf $path_to_build
 rm -r ~/.cache/pip
