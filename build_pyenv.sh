@@ -86,7 +86,7 @@ if [[ "$@" =~ "push_release" ]]
 then
     ## Make a draft release json with a markdown body
     release='"tag_name": "v'$APP_VERSION'", "target_commitish": "master", "name": "v'$APP_VERSION'", '
-    body="PgAdmin prebuilt bin for pgadmin_ynh\\n=========\\nPlease refer to main matrix project for the change : https://www.pgadmin.org/download/pgadmin-4-source-code/\\n\\nSha256sum : $sha256sumarchive"
+    body="PgAdmin prebuilt bin for pgadmin_ynh\\n=========\\nPlease refer to main PgAdmin project for the change : https://www.pgadmin.org/download/pgadmin-4-source-code/\\n\\nSha256sum : $sha256sumarchive"
     body=\"$body\"
     body='"body": '$body', '
     release=$release$body
