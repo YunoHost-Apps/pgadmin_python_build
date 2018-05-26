@@ -65,7 +65,7 @@ deactivate
 cd ..
 
 # Build archive of binary
-archive_name="pgadmin_${APP_VERSION}-bin${release_number}_$(uname -m).tar.gz"
+archive_name="pgadmin_${APP_VERSION}-$(lsb_release --codename --short)-bin${release_number}_$(uname -m).tar.gz"
 tar -czf "$archive_name" "$dir_name"
 
 sha256sumarchive=$(sha256sum "$archive_name" | cut -d' ' -f1)
@@ -94,7 +94,7 @@ then
     succ=$(curl -H "Authorization: token $perstok" --data "$release" $url)
 
     ## In case of success, we upload a file
-    upload=$(echo "$succ" | grep upload_url)
+    upload_generic=$(echo "$succ" | grep upload_url)
     if [[ $? -eq 0 ]]; then
         echo "Release created."
     else
@@ -102,14 +102,14 @@ then
         return
     fi
 
-    # $upload is like:
+    # $upload_generic is like:
     # "upload_url": "https://uploads.github.com/repos/:owner/:repo/releases/:ID/assets{?name,label}",
-    upload=$(echo $upload | cut -d "\"" -f4 | cut -d "{" -f1)
-    upload="$upload?name=$archive_name"
+    upload_prefix=$(echo $upload_generic | cut -d "\"" -f4 | cut -d "{" -f1)
+    upload_file="$upload_prefix?name=$archive_name"
     succ=$(curl -H "Authorization: token $perstok" \
         -H "Content-Type: $(file -b --mime-type $archive_name)" \
         -H "Accept: application/vnd.github.v3+json" \
-        --data-binary @$archive_name $upload)
+        --data-binary @$archive_name $upload_file)
 
     download=$(echo "$succ" | egrep -o "browser_download_url.+?")  
     if [[ $? -eq 0 ]]; then
