@@ -17,7 +17,7 @@ The build need a really clean environnement so it's recommended to use a chroot.
 
 - Install the dependance :
 ```
-apt install -y build-essential python2.7-dev libffi-dev python-pip python-setuptools sqlite3 libssl-dev python-virtualenv libjpeg-dev libpq-dev postgresql libgcrypt11-dev libgcrypt20-dev
+apt install -y build-essential python3-dev libffi-dev python3-pip python3-setuptools sqlite3 libssl-dev python3-venv libjpeg-dev libpq-dev postgresql libgcrypt11-dev libgcrypt20-dev
 ```
 
 - Clone the git repository.

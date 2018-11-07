@@ -32,8 +32,8 @@ fi
 # Upgrade system
 apt update
 apt dist-upgrade -y
-pip2 install --upgrade pip
-pip install --upgrade virtualenv
+pip3 install --upgrade pip
+pip3 install --upgrade virtualenv
 
 ## Get last PgAdmin Version
 pgadmin_remote_version_info=$(curl 'https://www.pgadmin.org/download/pgadmin-4-python-wheel/' | grep -m1 "https://www.postgresql.org/")
@@ -53,7 +53,7 @@ echo "Start build time : $(date)" >> PgAdmin_build_stat_time.log
 
 # Create new environnement
 mkdir -p $path_to_build
-virtualenv --no-site-packages --always-copy -p python2.7 $path_to_build
+python3 -m venv --copies $path_to_build
 cp activate_virtualenv_pgadmin $path_to_build/bin/activate
 
 # Go in virtualenv
@@ -63,8 +63,8 @@ PS1=""
 source bin/activate
 
 # Install source and build binary
-pip install -I --upgrade pip
-pip install -I --upgrade https://ftp.postgresql.org/pub/pgadmin/pgadmin$app_main_version/v$app_sub_version/pip/pgadmin${APP_VERSION}-py2.py3-none-any.whl
+pip3 install -I --upgrade pip
+pip3 install -I --upgrade https://ftp.postgresql.org/pub/pgadmin/pgadmin$app_main_version/v$app_sub_version/pip/pgadmin${APP_VERSION}-py2.py3-none-any.whl
 
 # Quit virtualenv
 deactivate
