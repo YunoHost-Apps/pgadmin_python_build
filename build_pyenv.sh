@@ -34,7 +34,6 @@ apt update
 apt dist-upgrade -y
 apt install -y build-essential python3-dev libffi-dev python3-pip python3-setuptools sqlite3 libssl-dev python3-venv libjpeg-dev libpq-dev postgresql libgcrypt11-dev libgcrypt20-dev
 pip3 install --upgrade pip
-pip3 install --upgrade virtualenv
 
 ## Get last PgAdmin Version
 pgadmin_remote_version_info=$(curl 'https://www.pgadmin.org/download/pgadmin-4-python-wheel/' | grep -m1 "https://www.postgresql.org/")
