@@ -32,7 +32,7 @@ fi
 # Upgrade system
 apt update
 apt dist-upgrade -y
-apt install -y build-essential python3-dev libffi-dev python3-pip python3-setuptools sqlite3 libssl-dev python3-venv libjpeg-dev libpq-dev postgresql libgcrypt11-dev libgcrypt20-dev
+apt install -y build-essential python3-dev libffi-dev python3-pip python3-setuptools sqlite3 libssl-dev python3-venv libjpeg-dev libpq-dev postgresql libgcrypt11-dev libgcrypt20-dev libpq-dev
 pip3 install --upgrade pip
 
 ## Get last PgAdmin Version
