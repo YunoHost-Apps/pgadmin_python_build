@@ -64,7 +64,7 @@ source bin/activate
 
 # Install source and build binary
 pip3 install -I --upgrade pip wheel
-pip3 install -I --upgrade https://ftp.postgresql.org/pub/pgadmin/pgadmin$app_main_version/v$app_sub_version/pip/pgadmin${APP_VERSION}-py2.py3-none-any.whl
+pip3 install -I --upgrade https://ftp.postgresql.org/pub/pgadmin/pgadmin$app_main_version/v$app_sub_version/pip/pgadmin${APP_VERSION}-py3-none-any.whl
 
 # Quit virtualenv
 deactivate
