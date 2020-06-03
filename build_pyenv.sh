@@ -36,10 +36,14 @@ apt install -y build-essential python3-dev libffi-dev python3-pip python3-setupt
 pip3 install --upgrade pip
 
 ## Get last PgAdmin Version
-pgadmin_remote_version_info=$(curl 'https://www.pgadmin.org/download/pgadmin-4-python-wheel/' | grep -m1 "https://www.postgresql.org/")
-app_main_version='4'
-app_sub_version=$(echo $pgadmin_remote_version_info | \
-        grep -E -o ':.*?"' | grep -E -o "v([[:digit:]]\.?)*/" | egrep -o '([[:digit:]]\.?)*')
+regex='https://www.postgresql.org/ftp/pgadmin/pgadmin([[:digit:]])/v([[:digit:]]+\.[[:digit:]]+)/pip'
+request_result=$(curl https://www.pgadmin.org/download/pgadmin-4-python/ | egrep -m1 -o "$regex")
+if [[ $request_result =~ $regex ]]; then
+    app_main_version=${BASH_REMATCH[1]}
+    app_sub_version=${BASH_REMATCH[2]}
+else
+    echo "Can't get pgadmin version"
+fi
 APP_VERSION="$app_main_version-$app_sub_version"
 
 # Clean environnement
@@ -64,7 +68,7 @@ source bin/activate
 
 # Install source and build binary
 pip3 install -I --upgrade pip wheel
-pip3 install -I --upgrade https://ftp.postgresql.org/pub/pgadmin/pgadmin$app_main_version/v$app_sub_version/pip/pgadmin${APP_VERSION}-py3-none-any.whl
+pip3 install -I --upgrade pgadmin$app_main_version==$APP_VERSION
 
 # Quit virtualenv
 deactivate
