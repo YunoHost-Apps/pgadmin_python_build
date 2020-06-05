@@ -12,6 +12,7 @@ release_number="1"
 
 #################################################################
 
+# Enable set to be sure that all command don't fail
 set -eu
 
 if [[ ! "$@" =~ "chroot-yes" ]]
@@ -51,9 +52,6 @@ APP_VERSION="$app_main_version-$app_sub_version"
 rm -rf $path_to_build
 rm -r ~/.cache/pip
 
-# Enable set to be sure that all command don't fail
-set -eu
-
 echo "Start build time : $(date)" >> PgAdmin_build_stat_time.log
 
 # Create new environnement
@@ -64,15 +62,14 @@ cp activate_virtualenv_pgadmin $path_to_build/bin/activate
 # Go in virtualenv
 old_pwd="$PWD"
 cd $path_to_build
-PS1=""
-source bin/activate
+set +u; source bin/activate; set -u
 
 # Install source and build binary
 pip3 install -I --upgrade pip wheel
 pip3 install -I --upgrade pgadmin$app_main_version==$APP_VERSION
 
 # Quit virtualenv
-deactivate
+set +u; deactivate; set -u
 cd ..
 
 # Build archive of binary
