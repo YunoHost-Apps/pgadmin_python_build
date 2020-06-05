@@ -50,14 +50,13 @@ APP_VERSION="$app_main_version-$app_sub_version"
 
 # Clean environnement
 rm -rf $path_to_build
-rm -r ~/.cache/pip
+rm -rf ~/.cache/pip
 
 echo "Start build time : $(date)" >> PgAdmin_build_stat_time.log
 
 # Create new environnement
 mkdir -p $path_to_build
 python3 -m venv --copies $path_to_build
-cp activate_virtualenv_pgadmin $path_to_build/bin/activate
 
 # Go in virtualenv
 old_pwd="$PWD"
