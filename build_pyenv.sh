@@ -12,6 +12,8 @@ release_number="1"
 
 #################################################################
 
+set -eu
+
 if [[ ! "$@" =~ "chroot-yes" ]]
 then
 	echo "Est vous bien dans un chroot ? [y/n]"
@@ -30,10 +32,9 @@ then
 fi
 
 # Upgrade system
-apt update
-apt dist-upgrade -y
-apt install -y build-essential python3-dev libffi-dev python3-pip python3-setuptools sqlite3 libssl-dev python3-venv libjpeg-dev libpq-dev postgresql libgcrypt11-dev libgcrypt20-dev libpq-dev
-pip3 install --upgrade pip
+apt-get update
+apt-get dist-upgrade -y
+apt-get install -y build-essential python3-dev libffi-dev python3-pip python3-setuptools sqlite3 libssl-dev python3-venv libjpeg-dev libpq-dev postgresql libgcrypt20-dev libpq-dev curl
 
 ## Get last PgAdmin Version
 regex='https://www.postgresql.org/ftp/pgadmin/pgadmin([[:digit:]])/v([[:digit:]]+\.[[:digit:]]+)/pip'
