@@ -65,7 +65,7 @@ set +u; source bin/activate; set -u
 
 # Install source and build binary
 pip3 install -I --upgrade pip wheel
-pip3 install -I --upgrade pgadmin$app_main_version==$APP_VERSION
+pip3 install -I --upgrade pgadmin$app_main_version==$app_sub_version
 
 # Quit virtualenv
 set +u; deactivate; set -u
