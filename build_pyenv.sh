@@ -35,7 +35,7 @@ fi
 # Upgrade system
 apt-get update
 apt-get dist-upgrade -y
-apt-get install -y build-essential python3-dev libffi-dev python3-pip python3-setuptools sqlite3 libssl-dev python3-venv libjpeg-dev libpq-dev postgresql libgcrypt20-dev libpq-dev curl
+apt-get install -y build-essential python3-dev libffi-dev python3-pip python3-setuptools sqlite3 libssl-dev python3-venv libjpeg-dev libpq-dev postgresql libgcrypt20-dev libpq-dev curl libkrb5-dev
 
 ## Get last PgAdmin Version
 regex='https://www.postgresql.org/ftp/pgadmin/pgadmin([[:digit:]])/v([[:digit:]]+\.[[:digit:]]+)/pip'
