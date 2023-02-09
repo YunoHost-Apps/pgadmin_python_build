@@ -54,18 +54,27 @@ rm -rf ~/.cache/pip
 
 echo "Start build time : $(date)" >> PgAdmin_build_stat_time.log
 
+# Install rustup to build crytography
+if [ -z $(which rustup) ]; then
+    curl -sSf -L https://static.rust-lang.org/rustup.sh | sh -s -- -y --default-toolchain=stable --profile=minimal
+else
+    rustup update
+fi
+source $HOME/.cargo/envs
+
 # Create new environnement
 mkdir -p $path_to_build
 python3 -m venv --copies $path_to_build
 
 # Go in virtualenv
 old_pwd="$PWD"
-cd $path_to_build
+pushd $path_to_build
 set +u; source bin/activate; set -u
 
 # Install source and build binary
 pip3 install -I --upgrade pip wheel
 pip3 install -I --upgrade pgadmin$app_main_version==$app_sub_version
+pip3 freeze > $old_pwd/pgadmin_${APP_VERSION}-$(lsb_release --codename --short)-build${release_number}_requirement.txt
 
 # Quit virtualenv
 set +u; deactivate; set -u
@@ -79,7 +88,7 @@ sha256sumarchive=$(sha256sum "$archive_name" | cut -d' ' -f1)
 
 mv "$archive_name" "$old_pwd"
 
-cd "$old_pwd"
+popd
 
 echo "Finish build time : $(date)" >> PgAdmin_build_stat_time.log
 echo "sha256 SUM : $sha256sumarchive"
