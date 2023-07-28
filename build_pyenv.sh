@@ -89,6 +89,8 @@ pip3 install -I --upgrade pip wheel
 # pip3 install --upgrade pgadmin$app_main_version==$app_sub_version
 pip3 install -I --upgrade $old_pwd/pgadmin$app_main_version-$app_sub_version-py3-none-any.whl
 pip3 freeze > $old_pwd/pgadmin_${APP_VERSION}-$(lsb_release --codename --short)-build${release_number}_requirement.txt
+# Fix requirement for pgadmin binary
+sed -i "s|pgadmin4==.*|pgadmin4==$app_sub_version|g" $old_pwd/pgadmin_${APP_VERSION}-$(lsb_release --codename --short)-build${release_number}_requirement.txt
 
 # Quit virtualenv
 set +u; deactivate; set -u
