@@ -65,15 +65,15 @@ popd
 rm -r wheel_archive
 
 # Go in virtualenv
-old_pwd="$PWD"
+old_pwd="${PWD/%\//}"
 pushd $path_to_build
 set +u; source bin/activate; set -u
 
 # Install source and build binary
-pip3 install -I --upgrade pip wheel
+pip3 install --upgrade pip wheel
 pip3 install --upgrade gunicorn
 # pip3 install --upgrade pgadmin4==$app_version
-pip3 install -I --upgrade $old_pwd/pgadmin4-$app_version-py3-none-any.whl
+pip3 install --upgrade $old_pwd/pgadmin4-$app_version-py3-none-any.whl
 pip3 freeze | grep -v 'pkg_resources' | sed "s|pgadmin4\s*@\s*file:.*|pgadmin4==$app_version|g" > $old_pwd/${result_prefix_name}-build1_requirement.txt
 
 # Quit virtualenv
@@ -83,7 +83,7 @@ cd ..
 # Build archive of binary
 tar -czf "${result_prefix_name}-bin1_armv7l.tar.gz" "$dir_name"
 sha256sumarchive=$(sha256sum "${result_prefix_name}-bin1_armv7l.tar.gz" | cut -d' ' -f1)
-mv "${result_prefix_name}-bin1_armv7l.tar.gz" "$old_pwd"
+mv "${result_prefix_name}-bin1_armv7l.tar.gz" "$old_pwd"/
 echo $sha256sumarchive > "$old_pwd/${result_prefix_name}-bin1_armv7l-sha256.txt"
 
 popd
