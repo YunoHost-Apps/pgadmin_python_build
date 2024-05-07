@@ -5,7 +5,7 @@ set -eu
 
 # Chroot config
 dir_name="pgadmin"
-path_to_build="/opt/yunohost/$dir_name"
+path_to_build="/opt/yunohost/$dir_name/venv"
 
 #################################################################
 
